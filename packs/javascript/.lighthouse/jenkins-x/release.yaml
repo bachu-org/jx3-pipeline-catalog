@@ -16,11 +16,7 @@ spec:
             value: /tekton/home/npm/.npmrc
           image: uses:jenkins-x/jx3-pipeline-catalog/tasks/javascript/release.yaml@versionStream
           name: ""
-          resources:
-            # override limits for all containers here
-            limits:
-              cpu: 400m
-              memory: 512Mi
+          resources: {}
           volumeMounts:
           - mountPath: /tekton/home/npm
             name: npmrc
@@ -32,11 +28,7 @@ spec:
         - name: next-version
           resources: {}
         - name: jx-variables
-          resources:
-            # override requests for the pod here
-            requests:
-              cpu: 0.1
-              memory: 128Mi
+          resources: {}
         - name: build-npm-install
           resources: {}
         - name: build-npm-test
