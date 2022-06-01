@@ -19,7 +19,7 @@ spec:
               -Xms10m -Xmx192m
           - name: MAVEN_OPTS
             value: -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.httpconnectionManager.ttlSeconds=25 -Dmaven.wagon.http.retryHandler.count=3
-          image: uses:jenkins-x/jx3-pipeline-catalog/tasks/maven/pullrequest.yaml@versionStream
+          image: uses:bachu-org/jx3-pipeline-catalog/tasks/maven/pullrequest.yaml@versionStream
           name: ""
           resources:
             # override limits for all containers here
@@ -40,14 +40,15 @@ spec:
               memory: 512Mi
         - name: build-set-version
           resources: {}
+          script: |
+            #!/usr/bin/env bash
+            source .jx/variables.sh
+            #mvn --no-transfer-progress install
+            mvn clean initialize test
         - name: build-mvn-install
           resources: {}
-        - name: check-registry
-          resources: {}
-        - name: build-container-build
-          resources: {}
-        - name: promote-jx-preview
-          resources: {}
+          script: |
+            sleep infinity
         volumes:
         - name: maven-settings
           secret:
