@@ -27,6 +27,8 @@ spec:
           volumeMounts:
           - mountPath: /root/.m2/
             name: maven-settings
+          - mountPath: /root/.m2/repository/net/sf/saxon/saxon-ee/9.4.0.6/
+            name: saxon-lic
           workingDir: /workspace/source
         steps:
         - image: uses:jenkins-x/jx3-pipeline-catalog/tasks/git-clone/git-clone-pr.yaml@versionStream
@@ -53,6 +55,9 @@ spec:
         - name: maven-settings
           secret:
             secretName: jenkins-maven-settings
+        - name: saxon-lic
+          secret:
+            secretName: saxon-lic-file
   podTemplate: {}
   serviceAccountName: tekton-bot
   timeout: 12h0m0s
