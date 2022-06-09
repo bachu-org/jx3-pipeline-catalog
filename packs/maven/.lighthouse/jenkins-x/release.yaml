@@ -41,6 +41,10 @@ spec:
               memory: 512Mi
         - name: build-mvn-deploy
           resources: {}
+          volumeMounts:
+          - name: license-file
+            mountPath: /home/jenkins/.mvnrepository/net/sf/saxon/saxon-ee/9.4.0.6/saxon-license.lic
+            subPath: "saxon-license.lic"
         volumes:
         - name: maven-settings
           secret:
@@ -49,6 +53,9 @@ spec:
           secret:
             optional: true
             secretName: jenkins-release-gpg
+        - name: license-file
+          secret:
+            secretName: saxon-lic-file
   podTemplate: {}
   serviceAccountName: tekton-bot
   timeout: 12h0m0s
