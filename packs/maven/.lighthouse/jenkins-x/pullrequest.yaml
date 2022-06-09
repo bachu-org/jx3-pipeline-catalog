@@ -13,12 +13,9 @@ spec:
         stepTemplate:
           env:
           - name: _JAVA_OPTIONS
-            value: -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap
-              -Dsun.zip.disableMemoryMapping=true -XX:+UseParallelGC -XX:MinHeapFreeRatio=5
-              -XX:MaxHeapFreeRatio=10 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90
-              -Xms10m -Xmx192m
+            value: ""
           - name: MAVEN_OPTS
-            value: -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.httpconnectionManager.ttlSeconds=25 -Dmaven.wagon.http.retryHandler.count=3
+            value: ""
           image: uses:bachu-org/jx3-pipeline-catalog/tasks/maven/pullrequest.yaml@versionStream
           name: ""
           resources:
@@ -27,8 +24,6 @@ spec:
           volumeMounts:
           - mountPath: /root/.m2/
             name: maven-settings
-          - mountPath: /root/.m2/repository/net/sf/saxon/saxon-ee/9.4.0.6/
-            name: saxon-lic
           workingDir: /workspace/source
         steps:
         - image: uses:jenkins-x/jx3-pipeline-catalog/tasks/git-clone/git-clone-pr.yaml@versionStream
@@ -42,22 +37,12 @@ spec:
               memory: 512Mi
         - name: build-set-version
           resources: {}
-          script: |
-            #!/usr/bin/env bash
-            source .jx/variables.sh
-            #mvn --no-transfer-progress install
-            mvn clean initialize test
         - name: build-mvn-install
           resources: {}
-          script: |
-            sleep infinity
         volumes:
         - name: maven-settings
           secret:
             secretName: jenkins-maven-settings
-        - name: saxon-lic
-          secret:
-            secretName: saxon-lic-file
   podTemplate: {}
   serviceAccountName: tekton-bot
   timeout: 12h0m0s
