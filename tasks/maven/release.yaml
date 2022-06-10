@@ -52,7 +52,9 @@ spec:
           resources: {}
           script: |
             #!/usr/bin/env sh
-            jx-release-version --tag > VERSION
+            jx-release-version -previous-version=from-tag:usage-schema- --tag -tag-prefix=usage-schema- > VERSION
+            echo "Paul New version is $VERSION"
+            cat VERSION
         - image: ghcr.io/jenkins-x/jx-boot:3.2.339
           name: jx-variables
           resources:
