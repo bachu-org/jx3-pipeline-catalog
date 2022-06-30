@@ -65,7 +65,7 @@ spec:
           script: |
             #!/usr/bin/env sh
             jx gitops variables
-        - image: bachupaul/maven:3.8.6-openjdk-8-slim-rpm
+        - image: bachupaul/maven:3.8.7-openjdk-8-slim-rpm
           name: build-mvn-deploy
           resources: {}
           script: |
