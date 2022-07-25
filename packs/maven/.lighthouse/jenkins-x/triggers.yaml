@@ -12,4 +12,5 @@ spec:
     context: "release"
     source: "release.yaml"
     branches:
-    - ^pipeline$
+    - ^master$
+    - ^main$    
